@@ -1,0 +1,58 @@
+version: "3.3"
+
+services:
+  database:
+    container_name: sgp-database
+    image: postgres
+    environment:
+      POSTGRES_USER: admin
+      POSTGRES_PASSWORD: admin
+      POSTGRES_DB: sgp_db
+    ports:
+      - "5432:5432"
+    networks:
+      - sgp-network
+
+  auth:
+    container_name: sgp-auth
+    image: quay.io/keycloak/keycloak:latest
+    environment:
+      KC_BOOTSTRAP_ADMIN_USERNAME: admin
+      KC_BOOTSTRAP_ADMIN_PASSWORD: admin
+      KC_DB: postgres
+      KC_DB_URL: jdbc:postgresql://sgp-database:5432/sgp_db
+      KC_DB_USERNAME: admin
+      KC_DB_PASSWORD: admin
+    command:
+      - "start-dev"
+      - "--import-realm"
+    volumes:
+      - ./realm.json:/opt/keycloak/data/import/realm.json
+    ports:
+      - "8080:8080"
+    depends_on:
+      - database
+    networks:
+      - sgp-network
+
+  server:
+    container_name: sgp-server
+    build:
+      context: .
+      dockerfile: Dockerfile
+    environment:
+      SPRING_DATASOURCE_URL: jdbc:postgresql://sgp-database:5432/sgp_db
+      SPRING_DATASOURCE_USERNAME: admin
+      SPRING_DATASOURCE_PASSWORD: admin
+      KEYCLOAK_AUTH_SERVER_URL: http://sgp-auth:8080/auth
+    ports:
+      - "3333:3333"
+    depends_on:
+      - database
+      - auth
+    networks:
+      - sgp-network
+
+networks:
+  sgp-network:
+    driver: bridge

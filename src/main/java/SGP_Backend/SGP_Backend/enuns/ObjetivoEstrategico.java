@@ -1,0 +1,18 @@
+package SGP_Backend.SGP_Backend.enuns;
+
+public enum ObjetivoEstrategico {
+    Intensificar_as_ações_educativas_com_ênfase_na_gestão_pública_e_cidadania,
+    Aprimorar_a_comunicação_com_a_sociedade_e_o_acesso_aos_serviços_e_às_informações,
+    Intensificar_a_articulação_e_cooperação_interorganizacional,
+    Aprimorar_a_fiscalização_com_foco_na_qualidade_e_na_geração_de_resultados,
+    Intensificar_ações_de_controle_preventivo_e_concomitante,
+    Intensificar_a_atuação_do_controle_externo_com_foco_na_efetividade_das_políticas_públicas,
+    Garantir_a_celeridade,_efetividade_e_uniformidade_dos_julgamentos_e_decisões,
+    Fortalecer_os_mecanismos_de_governança_institucional,
+    Fortalecer_a_cultura_de_inovação_e_transformação_de_serviços_e_processos,
+    Fomentar_a_cultura_de_sustentabilidade_voltada_à_responsabilidade_social,_ambiental_e_econômica,
+    Intensificar_o_desenvolvimento_das_pessoas_e_a_cultura_voltada_à_gestão_por_resultados,
+    Fomentar_ações_de_fortalecimento_das_carreiras,_de_qualidade_de_vida_no_trabalho_e_de_valorização_dos_servidores,
+    Prover_soluções_tecnológicas_inovadoras,_integradas,_seguras_e_de_alto_desempenho,
+    Aperfeiçoar_a_gestão_e_aplicação_dos_recursos
+}

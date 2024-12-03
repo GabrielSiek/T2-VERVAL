@@ -1,0 +1,59 @@
+stages:
+  - build
+  - test
+  - deploy
+
+
+# Job de Build
+build:
+  stage: build
+  script:
+    - mvn clean package -DskipTests
+  except:
+    - main
+
+# Job de Teste
+test:
+  stage: test
+  script:
+    - mvn test
+  needs:
+    - build
+  except:
+    - main
+
+# Deploy para Homologação (Staging) a partir da branch Develop
+deploy-staging:
+  stage: deploy
+  environment:
+    name: staging
+  image: docker:18.09
+  services:
+    - docker:18.09-dind
+  before_script:
+    - apk add --no-cache docker-compose
+  script:
+    - echo "Deploying to staging environment..."
+    - docker-compose down || true
+    - docker network create sgp_backend_sgp-network
+    - docker-compose up -d --build
+  only:
+    - develop
+
+# Deploy para Produção a partir da branch Main
+# ! TODO - CHANGE PRODUCTION ENVIRONMENTS
+deploy-prod:
+  environment:
+    name: staging
+  image: docker:18.09
+  services:
+    - docker:18.09-dind
+  before_script:
+    - apk add --no-cache docker-compose
+  script:
+    - echo "Deploying to staging environment..."
+    - docker-compose down || true
+    - docker network create sgp_backend_sgp-network
+    - docker-compose up -d --build
+  only:
+    - main
