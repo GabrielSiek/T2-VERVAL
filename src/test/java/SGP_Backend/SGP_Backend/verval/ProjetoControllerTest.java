@@ -46,18 +46,6 @@ class ProjetoControllerTest {
 
     @Test
     void testCriarProjeto_Success() throws Exception {
-        ProjetoDTO projetoDTO = new ProjetoDTO(
-                null,
-                "Projeto Teste",
-                "Objetivo do Projeto",
-                "Unidade Teste",
-                "2024-11-28",
-                "2024-11-29",
-                "2024-12-01",
-                TipoProjeto.TATICO,
-                StatusProjeto.EM_ANDAMENTO
-        );
-
         Projeto projetoSalvo = new Projeto(
                 projetoDTO.getNome(),
                 projetoDTO.getObjetivo(),
@@ -73,13 +61,12 @@ class ProjetoControllerTest {
 
         assertEquals(HttpStatus.CREATED, response.getStatusCode());
         assertNotNull(response.getBody());
-        assertEquals("Projeto Teste", response.getBody().getNome());
-        assertEquals("Objetivo do Projeto", response.getBody().getObjetivo());
-        assertEquals("Unidade Teste", response.getBody().getUnidade());
-
-        assertEquals("2024-11-28", response.getBody().getDataInicio());
-        assertEquals("2024-11-29", response.getBody().getDataFim());
-        assertEquals("2024-12-01", response.getBody().getPrazo());
+        assertEquals(projetoDTO.getNome(), response.getBody().getNome());
+        assertEquals(projetoDTO.getObjetivo(), response.getBody().getObjetivo());
+        assertEquals(projetoDTO.getUnidade(), response.getBody().getUnidade());
+        assertEquals(projetoDTO.getDataInicio(), response.getBody().getDataInicio());
+        assertEquals(projetoDTO.getDataFim(), response.getBody().getDataFim());
+        assertEquals(projetoDTO.getPrazo(), response.getBody().getPrazo());
     }
 
     @Test
